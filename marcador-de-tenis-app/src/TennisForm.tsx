@@ -5,6 +5,7 @@ export function TennisForm(): any {
   const [player1Name, setPlayer1Name] = useState("");
   const [player2Name, setPlayer2Name] = useState("");
   const [gameStarted, setGameStarted] = useState(true);
+  const [isWin, setIsWin] = useState(false);
   const tennisGame = new TennisGame(player1Name, player2Name);
   function handleSubmit(event: any) {
     event.preventDefault();
@@ -29,8 +30,16 @@ export function TennisForm(): any {
   }
 
   function getScore() {
+    disableButtons();
     // @ts-ignore: Object is possibly 'null'.
-    document.getElementById("score").innerHTML = tennisGame.getScore();
+    document.getElementById("score").innerHTML +=
+      tennisGame.getScore() + "<br>";
+  }
+
+  function disableButtons() {
+    if (tennisGame.getScore().toString().includes("win")) {
+      setIsWin(true);
+    }
   }
 
   if (gameStarted) {
@@ -74,6 +83,7 @@ export function TennisForm(): any {
                 id="player1Name"
                 value="wonPoint"
                 onClick={player1WonPoint}
+                disabled={isWin}
               ></input>
             </div>
 
@@ -85,6 +95,7 @@ export function TennisForm(): any {
                 id="player2Name"
                 value="wonPoint"
                 onClick={player2WonPoint}
+                disabled={isWin}
               ></input>
             </div>
           </div>
