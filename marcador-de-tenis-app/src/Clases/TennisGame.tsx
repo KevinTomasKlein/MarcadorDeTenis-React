@@ -58,6 +58,6 @@ export class TennisGame {
       score = this.player1Points + " - " + this.player2Points;
     }
 
-    return "<p></p>";
+    return score;
   }
 }

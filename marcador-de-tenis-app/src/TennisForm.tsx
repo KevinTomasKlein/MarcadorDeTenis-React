@@ -10,89 +10,89 @@ export function TennisForm(): any {
     event.preventDefault();
     setPlayer1Name(event.target.elements.player1Name.value);
     setPlayer2Name(event.target.elements.player2Name.value);
-    setGameStarted(true);
+    setGameStarted(false);
   }
   function newGameSet(event: any) {
-    event.preventDefault();
-    setGameStarted(false);
+    setGameStarted(true);
   }
 
   function player1WonPoint(event: any) {
     event.preventDefault();
     tennisGame.wonPoint(player1Name);
+    getScore();
   }
 
   function player2WonPoint(event: any) {
     event.preventDefault();
     tennisGame.wonPoint(player2Name);
+    getScore();
+  }
+
+  function getScore() {
+    // @ts-ignore: Object is possibly 'null'.
+    document.getElementById("score").innerHTML = tennisGame.getScore();
   }
 
   if (gameStarted) {
     return (
-      <body>
-        <div
-          className="container w-75"
-          style={{ backgroundColor: "lightblue", height: "500px" }}
-        >
-          <form className="form" onSubmit={handleSubmit}>
-            <h1 className="text-center">TENNIS GAME</h1>
-            <div className="col-md-12 justify-content-around d-flex ">
-              <div className="col-md-3  mb-5 pb-1">
-                <label htmlFor="player1Name">JUGADOR 1</label>
-                <input type="text" id="player1Name" required={true}></input>
-              </div>
-              <div className="col-lg-3  mb-5">
-                <label htmlFor="player2Name">JUGADOR 2</label>
-                <input type="text" id="player2Name" required={true}></input>
-              </div>
+      <div
+        className="container w-75"
+        style={{ backgroundColor: "lightblue", height: "500px" }}
+      >
+        <form className="form" onSubmit={handleSubmit}>
+          <h1 className="text-center">TENNIS GAME</h1>
+          <div className="col-md-12 justify-content-around d-flex ">
+            <div className="col-md-3  mb-5 pb-1">
+              <label htmlFor="player1Name">JUGADOR 1</label>
+              <input type="text" id="player1Name" required={true}></input>
             </div>
-            <div className="d-flex justify-content-center pb-5">
-              <input className="button" type="submit" value="Play!"></input>
+            <div className="col-lg-3  mb-5">
+              <label htmlFor="player2Name">JUGADOR 2</label>
+              <input type="text" id="player2Name" required={true}></input>
             </div>
-          </form>
-        </div>
-      </body>
+          </div>
+          <div className="d-flex justify-content-center pb-5">
+            <input className="button" type="submit" value="Play!"></input>
+          </div>
+        </form>
+      </div>
     );
   } else {
     return (
-      <body>
-        <div
-          className="container w-75"
-          style={{ backgroundColor: "lightblue", height: "500px" }}
-        >
-          <form className="form" onSubmit={newGameSet}>
-            <h1 className="text-center">TENNIS GAME</h1>
-            <div className="col-md-12 justify-content-around d-flex ">
-              <div className="col-md-3  mb-5 pb-1">
-                <label htmlFor="player1Name">{player1Name}</label>
-                <input type="text" id="player1Name"></input>
-                <input
-                  type="button"
-                  id="player1Name"
-                  value="wonPoint"
-                  onClick={player1WonPoint}
-                ></input>
-              </div>
+      <div
+        className="container w-75"
+        style={{ backgroundColor: "lightblue", height: "500px" }}
+      >
+        <form className="form" onSubmit={newGameSet}>
+          <h1 className="text-center">TENNIS GAME</h1>
+          <div className="col-md-12 justify-content-around d-flex ">
+            <div className="col-md-3  mb-5 pb-1">
+              <label htmlFor="player1Name">{player1Name}</label>
 
-              <div className="col-md-3">
-                <p className="text-muted py-5">Soy el texto de la partida</p>
-              </div>
-              <div className="col-lg-3  mb-5">
-                <label htmlFor="player2Name">{player2Name}</label>
-                <input
-                  type="button"
-                  id="player2Name"
-                  value="wonPoint"
-                  onClick={player2WonPoint}
-                ></input>
-              </div>
+              <input
+                type="button"
+                id="player1Name"
+                value="wonPoint"
+                onClick={player1WonPoint}
+              ></input>
             </div>
-            <div className="d-flex justify-content-center pb-5">
-              <input className="button" type="submit" value="Play!"></input>
+
+            <div className="col-md-3" id="score"></div>
+            <div className="col-lg-3  mb-5">
+              <label htmlFor="player2Name">{player2Name}</label>
+              <input
+                type="button"
+                id="player2Name"
+                value="wonPoint"
+                onClick={player2WonPoint}
+              ></input>
             </div>
-          </form>
-        </div>
-      </body>
+          </div>
+          <div className="d-flex justify-content-center pb-5">
+            <input className="button" type="submit" value="Play!"></input>
+          </div>
+        </form>
+      </div>
     );
   }
 }
