@@ -86,9 +86,13 @@ export function TennisForm(): any {
                 disabled={isWin}
               ></input>
             </div>
+            <div className="col-3">
+              Love all
+              <br />
+              <div className="mb-5" id="score"></div>
+            </div>
 
-            <div className="col-md-3" id="score"></div>
-            <div className="col-lg-3  mb-5">
+            <div className="col-3  mb-5">
               <label htmlFor="player2Name">{player2Name}</label>
               <input
                 type="button"

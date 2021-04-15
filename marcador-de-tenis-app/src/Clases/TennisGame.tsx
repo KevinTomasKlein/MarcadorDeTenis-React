@@ -8,7 +8,7 @@ export class TennisGame {
     "Fifteen",
     "Thirty",
     "Forty",
-    "Duece",
+    "Deuce",
     "Advantage",
   ];
   constructor(player1Name: string, player2Name: string) {
@@ -37,20 +37,20 @@ export class TennisGame {
   }
 
   private increasePoints(
-    pointToIncreased: string,
+    pointToIncrease: string,
     rivalPoint: string
   ): string[] {
-    if (pointToIncreased === "Advantage" && rivalPoint === "Forty") {
+    if (pointToIncrease === "Advantage" && rivalPoint === "Forty") {
       return ["win", rivalPoint];
-    } else if (pointToIncreased === "Forty" && rivalPoint === "Advantage") {
+    } else if (pointToIncrease === "Forty" && rivalPoint === "Advantage") {
       return ["Forty", "Forty"];
-    } else if (pointToIncreased === "Forty" && rivalPoint === "Forty") {
+    } else if (pointToIncrease === "Forty" && rivalPoint === "Forty") {
       return ["Advantage", rivalPoint];
-    } else if (pointToIncreased === "Forty") {
+    } else if (pointToIncrease === "Forty") {
       return ["win", rivalPoint];
     } else {
       return [
-        this.points[this.points.indexOf(pointToIncreased) + 1],
+        this.points[this.points.indexOf(pointToIncrease) + 1],
         rivalPoint,
       ];
     }
@@ -60,7 +60,7 @@ export class TennisGame {
     let score: string = "";
     if (this.player1Points === this.player2Points) {
       if (this.player1Points === "Forty") {
-        return "Duece";
+        return "Deuce";
       } else {
         return this.player1Points + " all";
       }
