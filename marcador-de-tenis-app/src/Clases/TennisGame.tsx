@@ -20,40 +20,39 @@ export class TennisGame {
 
   public wonPoint(playerName: string): void {
     if (this.player1Name === playerName) {
-      this.player1Points = this.increasePoints(this.player1Points);
+      let scores: string[] = this.increasePoints(
+        this.player1Points,
+        this.player2Points
+      );
+      this.player1Points = scores[0];
+      this.player2Points = scores[1];
     } else {
-      this.player2Points = this.increasePoints(this.player2Points);
+      let scores: string[] = this.increasePoints(
+        this.player2Points,
+        this.player1Points
+      );
+      this.player2Points = scores[0];
+      this.player1Points = scores[1];
     }
   }
 
-  private increasePoints(newPoint: string) {
-    this.decreasePoints(newPoint);
-    if (
-      this.player1Points === this.player2Points ||
-      this.player1Points !== "Advantage"
-    ) {
-      for (let i: number = 0; i < this.points.length - 1; i++) {
-        if (this.points[i] === newPoint) {
-          if (this.points[i] === "Forty" && this.player1Points === "Forty") {
-            this.points[i] = this.player1Name;
-            return this.points[i + 1];
-          } else if (
-            this.points[i] === "Forty" &&
-            this.player2Points === "Forty"
-          ) {
-            this.points[i] = this.player2Name;
-            return this.points[i + 1];
-          }
-          return this.points[i + 1];
-        }
-      }
-    }
-    return " win";
-  }
-
-  decreasePoints(newPoint: string) {
-    if (newPoint === "Advantage") {
-      return (newPoint = "Duece");
+  private increasePoints(
+    pointToIncreased: string,
+    rivalPoint: string
+  ): string[] {
+    if (pointToIncreased === "Advantage" && rivalPoint === "Forty") {
+      return ["win", rivalPoint];
+    } else if (pointToIncreased === "Forty" && rivalPoint === "Advantage") {
+      return ["Forty", "Forty"];
+    } else if (pointToIncreased === "Forty" && rivalPoint === "Forty") {
+      return ["Advantage", rivalPoint];
+    } else if (pointToIncreased === "Forty") {
+      return ["win", rivalPoint];
+    } else {
+      return [
+        this.points[this.points.indexOf(pointToIncreased) + 1],
+        rivalPoint,
+      ];
     }
   }
 
@@ -61,13 +60,9 @@ export class TennisGame {
     let score: string = "";
     if (this.player1Points === this.player2Points) {
       if (this.player1Points === "Forty") {
-        this.player1Points = this.increasePoints(this.player1Points);
-        this.player2Points = this.increasePoints(this.player2Points);
-      }
-      if (this.player1Points === "Duece") {
-        score = " Duece";
+        return "Duece";
       } else {
-        score = this.player1Points + " all";
+        return this.player1Points + " all";
       }
     } else if (
       this.player1Points === "Advantage" ||
@@ -78,18 +73,10 @@ export class TennisGame {
       } else if (this.player2Points === "Advantage") {
         score = this.player2Name + " Advantage";
       }
-    } else if (
-      this.player1Points === "Duece" ||
-      this.player2Points === "Duece"
-    ) {
-      score = " Duece";
-      for (let i: number = 0; i <= 2; i++) {
-        if (this.points[i] === this.player1Points) {
-          score = this.player2Name + " win";
-        } else if (this.points[i] === this.player2Points) {
-          score = this.player1Name + " win";
-        }
-      }
+    } else if (this.player1Points === "win") {
+      return this.player1Name + " win";
+    } else if (this.player2Points === "win") {
+      return this.player2Name + " win";
     } else {
       score = this.player1Points + " - " + this.player2Points;
     }
